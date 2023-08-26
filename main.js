@@ -24,10 +24,13 @@ let proofWork = () => {
     return proof;
 }
 
+
 if(proofWork() == PROOF) {
     chainBlock.addNewTransaction("a", "b", 50);
     let prevHash = chainBlock.lastBlock() ? chainBlock.lastBlock().hash : null;
     chainBlock.addNewBlock(prevHash);
 }
+
+
 
 console.log("Chain : ", chainBlock.chain);
