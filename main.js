@@ -2,6 +2,10 @@ let BlockChain = require("./blockChain");
 
 let blockChain = new BlockChain();
 
+let Hash = require ('./hash');
+
+let hash = new Hash();
+
 /* let hash = require ('object-hash'); */
 
 /* let PROOF = 7777;
@@ -31,8 +35,36 @@ if(proofWork() == PROOF) {
     blockChain.addNewBlock(prevHash);
 } */
 
-blockChain.addNewBlock("prevHash", 1);
+const prevHash ='prevHash'
+
+const data = [
+    { 
+        voter: "a",
+        candidate: "b",
+        voteToken: 1
+
+    },
+    { 
+        voter: "aa",
+        candidate: "b",
+        voteToken: 1
+
+    },
+    { 
+        voter: "aaa",
+        candidate: "b",
+        voteToken: 1
+
+    },
+];
+
+const nonce = 100;
+
+const hashedvalue = hash.createHash(prevHash, data, nonce);
+console.log(hashedvalue);
+
+/* blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
 blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
-console.log("Chain : ", blockChain);
+console.log("Chain : ", blockChain); */

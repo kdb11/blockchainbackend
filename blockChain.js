@@ -1,4 +1,6 @@
-let hash = require ('object-hash');
+let Hash = require ('./hash');
+
+let hash = new Hash();
 
 class BlockChain {
 
@@ -15,7 +17,7 @@ class BlockChain {
             index: this.chain.length + 1,
             timestamp: Date.now(),
             votes: this.pendingVotes,
-            hash: hash,
+            hash: hashedvalue,
             nonce: nonce, 
             prevHash: prevHash,
         };
@@ -24,6 +26,7 @@ class BlockChain {
 
         this.chain.push(block);
         this.pendingVotes = [];
+
         return block;
 
     }
