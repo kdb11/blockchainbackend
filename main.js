@@ -1,6 +1,6 @@
-let ChainBlock = require("./chainBlock");
+let BlockChain = require("./blockChain");
 
-let chainBlock = new ChainBlock();
+let blockChain = new BlockChain();
 
 let hash = require ('object-hash');
 
@@ -26,11 +26,11 @@ let proofWork = () => {
 
 
 if(proofWork() == PROOF) {
-    chainBlock.addNewTransaction("a", "b", 50);
-    let prevHash = chainBlock.lastBlock() ? chainBlock.lastBlock().hash : null;
-    chainBlock.addNewBlock(prevHash);
+    blockChain.addNewTransaction("a", "b", 50);
+    let prevHash = blockChain.lastBlock() ? blockChain.lastBlock().hash : null;
+    blockChain.addNewBlock(prevHash);
 }
 
 
 
-console.log("Chain : ", chainBlock.chain);
+console.log("Chain : ", blockChain.chain);

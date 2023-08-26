@@ -1,6 +1,6 @@
 let hash = require ('object-hash');
 
-class ChainBlock {
+class BlockChain {
 
     constructor() {
 
@@ -41,4 +41,4 @@ class ChainBlock {
 
 }
 
-module.exports = ChainBlock;
+module.exports = BlockChain;
