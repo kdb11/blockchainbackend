@@ -6,6 +6,10 @@ let Hash = require ('./hash');
 
 let hash = new Hash();
 
+let ProofOfWork = require ('./proofOfWork');
+
+let proofOfWork = new ProofOfWork();
+
 /* let hash = require ('object-hash'); */
 
 /* let PROOF = 7777;
@@ -58,10 +62,13 @@ const data = [
     },
 ];
 
-const nonce = 100;
+/* const nonce = 100;
 
 const hashedvalue = hash.createHash(prevHash, data, nonce);
-console.log(hashedvalue);
+console.log(hashedvalue); */
+
+const nonce = proofOfWork.proofOfWork(prevHash, data);
+console.log(nonce);
 
 /* blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
