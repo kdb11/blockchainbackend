@@ -1,4 +1,4 @@
-let hash = require ('object-hash');
+/* let hash = require ('object-hash'); */
 
 class BlockChain {
 
@@ -6,29 +6,36 @@ class BlockChain {
 
         this.chain = [];
 
-        this.currerntTransactions = [];
+        this.pendingVotes = [];
 
     }
 
-    addNewBlock(prevHash) {
+    addNewBlock(prevHash, nonce) {
         let block = {
             index: this.chain.length + 1,
             timestamp: Date.now(),
-            transactions: this.currerntTransactions,
-            /* hash: null, */ 
+            votes: this.pendingVotes,
+            hash: hash,
+            nonce: nonce, 
             prevHash: prevHash,
         };
 
         this.hash = hash(block);
 
         this.chain.push(block);
-        this.currerntTransactions = [];
+        this.pendingVotes = [];
         return block;
 
     }
 
-    addNewTransaction(sender, recipient, amount) {
-        this.currerntTransactions.push({ sender, recipient, amount })
+    addNewVote(voter, candidate, voteToken) {
+        const vote = {
+            voter,
+            candidate,
+            voteToken
+        }
+
+        this.pendingVotes.push(vote);
     }
 
     isEmpty() {

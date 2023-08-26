@@ -2,9 +2,9 @@ let BlockChain = require("./blockChain");
 
 let blockChain = new BlockChain();
 
-let hash = require ('object-hash');
+/* let hash = require ('object-hash'); */
 
-let PROOF = 7777;
+/* let PROOF = 7777;
 
 let validateProof = (proof) => {
     let guessHash = hash(proof);
@@ -26,11 +26,13 @@ let proofWork = () => {
 
 
 if(proofWork() == PROOF) {
-    blockChain.addNewTransaction("a", "b", 50);
+    blockChain.addNewVote("a", "b", 50);
     let prevHash = blockChain.lastBlock() ? blockChain.lastBlock().hash : null;
     blockChain.addNewBlock(prevHash);
-}
+} */
 
-
-
+blockChain.addNewBlock("prevHash", 1);
+blockChain.addNewVote('a', 'b', 1)
+blockChain.addNewBlock("prevHash", 1);
+blockChain.addNewVote('a', 'b', 1)
 console.log("Chain : ", blockChain.chain);
