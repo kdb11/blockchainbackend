@@ -10,7 +10,7 @@ class ProofOfWork {
         while (hashedvalue.substring(0, 3) !== '000') {
             nonce++;
             hashedvalue = hash.createHash(prevHash, data, nonce);
-            console.log(hash);
+            console.log(hashedvalue);
         }
 
         return nonce;
