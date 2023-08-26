@@ -35,4 +35,4 @@ blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
 blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
-console.log("Chain : ", blockChain.chain);
+console.log("Chain : ", blockChain);

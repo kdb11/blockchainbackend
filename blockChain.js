@@ -1,4 +1,4 @@
-/* let hash = require ('object-hash'); */
+let hash = require ('object-hash');
 
 class BlockChain {
 
