@@ -1,6 +1,6 @@
 let Hash = require ('./hash');
 
-let hash = new Hash();
+let hashedvalue = new Hash();
 
 class BlockChain {
 
@@ -10,19 +10,20 @@ class BlockChain {
 
         this.pendingVotes = [];
 
+        this.addNewBlock("Genesis", 1, "Genesis");
     }
 
-    addNewBlock(prevHash, nonce) {
+    addNewBlock(prevHash, nonce, hash) {
         let block = {
             index: this.chain.length + 1,
             timestamp: Date.now(),
             votes: this.pendingVotes,
-            hash: hashedvalue,
+            hash: hash,
             nonce: nonce, 
             prevHash: prevHash,
         };
 
-        this.hash = hash(block);
+        /* this.hash = hashedvalue.createHash(block.prevHash, block.votes, block.nonce); */
 
         this.chain.push(block);
         this.pendingVotes = [];
@@ -39,6 +40,7 @@ class BlockChain {
         }
 
         this.pendingVotes.push(vote);
+        return this.lastBlock()['index'] + 1;
     }
 
     isEmpty() {

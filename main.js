@@ -70,8 +70,13 @@ console.log(hashedvalue); */
 const nonce = proofOfWork.proofOfWork(prevHash, data);
 console.log(nonce);
 
-/* blockChain.addNewBlock("prevHash", 1);
+blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
 blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
-console.log("Chain : ", blockChain); */
+blockChain.addNewBlock("prevHash", 1, "a");
+blockChain.addNewVote('a', 'b', 1)
+blockChain.addNewBlock("prevHash", 1);
+blockChain.addNewVote('a', 'b', 1)
+console.log("Chain : ", blockChain); 
+console.log(blockChain.lastBlock());
