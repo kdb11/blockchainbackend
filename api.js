@@ -40,4 +40,13 @@ app.get('/api/mine', (req, res) => {
     });
 });
 
+app.post('/api/regnode', (req, res) => {
+
+    const url = req.body.nodeUrl; 
+
+    if(voteChain.networkNodes.indexOf(url) == -1) {
+        voteChain.networkNodes
+    }
+});
+
 app.listen(3000, () => console.log('Server  on port 3000'));

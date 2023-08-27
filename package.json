@@ -2,5 +2,18 @@
   "dependencies": {
     "express": "^4.18.2",
     "sha256": "^0.2.0"
-  }
+  },
+  "name": "y",
+  "description": "",
+  "version": "1.0.0",
+  "main": "api.js",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "scripts": {
+    "start": "node api.js",
+    "dev": "nodemon --watch api.js"
+  },
+  "author": "",
+  "license": "ISC"
 }

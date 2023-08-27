@@ -10,6 +10,10 @@ class BlockChain {
 
         this.pendingVotes = [];
 
+        this. networkNodes = [];
+
+        this.nodeUrl = process.argv[1];
+
         this.addNewBlock("Genesis", 1, "Genesis");
     }
 
