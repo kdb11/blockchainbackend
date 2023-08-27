@@ -12,7 +12,7 @@ class BlockChain {
 
         this. networkNodes = [];
 
-        this.nodeUrl = process.argv[1];
+        this.nodeUrl = process.argv[3];
 
         this.addNewBlock("Genesis", 1, "Genesis");
     }

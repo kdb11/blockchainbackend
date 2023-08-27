@@ -12,7 +12,9 @@
   },
   "scripts": {
     "start": "node api.js",
-    "dev": "nodemon --watch api.js"
+    "node-1": "nodemon api.js 3000 http://localhost:3000",
+    "node-2": "nodemon api.js 3001 http://localhost:3001",
+    "node-3": "nodemon api.js 3002 http://localhost:3002"
   },
   "author": "",
   "license": "ISC"

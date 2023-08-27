@@ -5,6 +5,7 @@ let Hash = require ('./hash');
 let hashedvalue = new Hash();
 let BlockChain = require("./blockChain");
 const voteChain = new BlockChain();
+const PORT = process.argv[2];
 
 console.log(proofOfWork, hashedvalue);
 
@@ -45,8 +46,8 @@ app.post('/api/regnode', (req, res) => {
     const url = req.body.nodeUrl; 
 
     if(voteChain.networkNodes.indexOf(url) == -1) {
-        voteChain.networkNodes
+        voteChain.networkNodes.push(url);
     }
 });
 
-app.listen(3000, () => console.log('Server  on port 3000'));
+app.listen(PORT, () => console.log(`Server on port ${PORT}`));
