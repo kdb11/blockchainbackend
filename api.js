@@ -1,4 +1,5 @@
 const express = require ('express');
+const fetch = require('node-fetch');
 let ProofOfWork = require ('./proofOfWork');
 let proofOfWork = new ProofOfWork();
 let Hash = require ('./hash');
@@ -41,13 +42,59 @@ app.get('/api/mine', (req, res) => {
     });
 });
 
+/* app.post('/api/regtoallnodes', (req, res) => {
+    const urlToAdd = req.body.NodeUrl;
+
+    if (voteChain.networkNodes.indexOf(urlToAdd) === -1) {
+        voteChain.networkNodes.push(urlToAdd);
+    }
+
+    voteChain.networkNodes.forEach
+}) */
+
 app.post('/api/regnode', (req, res) => {
 
     const url = req.body.nodeUrl; 
 
-    if(voteChain.networkNodes.indexOf(url) == -1) {
+    if(voteChain.networkNodes.indexOf(url) == -1 && voteChain.nodeUrl !== url) {
         voteChain.networkNodes.push(url);
     }
+
+    res.status(201).json({sucess: true, data: 'New node added'})
 });
 
+app.post('/api/regnodes', (req, res) => {
+    const newNodes = req.body.nodes;
+
+    newNodes.forEach(url => {
+        if (voteChain.networkNodes.indexOf(url) === -1 && voteChain.nodeUrl !== url) {
+            voteChain.networkNodes.push(url);
+        }
+    });
+
+    res.status(201).json({ success: true, data: 'New nodes added' });
+});
+
+/* app.post('/api/regnodes', (req, res) => {
+    const newNodes = req.body.nodes;
+    const singleNode = req.body.nodeUrl;
+
+    function addNodeToNetwork(nodeUrl) {
+        if (voteChain.networkNodes.indexOf(nodeUrl) === -1 && voteChain.nodeUrl !== nodeUrl) {
+            voteChain.networkNodes.push(nodeUrl);
+        }
+    }
+
+    if (newNodes && Array.isArray(newNodes)) {
+        newNodes.forEach(nodeUrl => {
+            addNodeToNetwork(nodeUrl);
+        });
+    }
+
+    if (singleNode && typeof singleNode === 'string') {
+        addNodeToNetwork(singleNode);
+    }
+
+    res.status(201).json({ success: true, data: 'New nodes added' });
+}); */
 app.listen(PORT, () => console.log(`Server on port ${PORT}`));
