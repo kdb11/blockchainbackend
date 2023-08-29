@@ -1,4 +1,5 @@
 let Hash = require ('./hash');
+const { v4: uuidv4 } = require('uuid');
 
 let hashedvalue = new Hash();
 
@@ -15,7 +16,7 @@ class BlockChain {
         this.nodeUrl = process.argv[3];
 
         this.addNewBlock("Genesis", 1, "Genesis");
-    }
+    };
 
     addNewBlock(prevHash, nonce, hash) {
         let block = {
@@ -34,26 +35,31 @@ class BlockChain {
 
         return block;
 
-    }
+    };
 
     addNewVote(voter, candidate, voteToken) {
         const vote = {
             voter,
             candidate,
-            voteToken
-        }
+            voteToken,
+            voteId: uuidv4().split('-').join('')
+        };
 
+        return vote;
+    };
+
+    addVoteToPendingVotes(vote) {
         this.pendingVotes.push(vote);
         return this.lastBlock()['index'] + 1;
-    }
+    };
 
     isEmpty() {
         return this.chain.length == 0;
-    }
+    };
 
     lastBlock() {
         return this.chain.slice(-1)[0];
-    }
+    };
 
 }
 
