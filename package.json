@@ -8,9 +8,6 @@
   "description": "",
   "version": "1.0.0",
   "main": "api.js",
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  },
   "scripts": {
     "start": "node api.js",
     "node-1": "nodemon api.js 3000 http://localhost:3000",
@@ -18,5 +15,8 @@
     "node-3": "nodemon api.js 3002 http://localhost:3002"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }

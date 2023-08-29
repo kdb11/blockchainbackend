@@ -52,6 +52,34 @@ app.get('/api/mine', (req, res) => {
     voteChain.networkNodes.forEach
 }) */
 
+app.post('/api/regtoallnodes', async(req, res) => {
+    const urlToAdd = req.body.nodeUrl;
+
+    if(voteChain.networkNodes.indexOf(urlToAdd) === -1) {
+        voteChain.networkNodes.push(urlToAdd);
+    }
+
+    voteChain.networkNodes.forEach(async(url) => {
+        const body = { nodeUrl: urlToAdd};
+
+        await fetch(`${url}/api/regbide`, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json'}
+        });
+    });
+
+    const body = {nodes: [...voteChain.networkNodes, voteChain.nodeUrl] };
+
+    await fetch(`${urlToAdd}/api/regnodes`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json'}
+    });
+
+    res.status(201).json({ success: true, data: 'New node/nodes added in network' });
+});
+
 app.post('/api/regnode', (req, res) => {
 
     const url = req.body.nodeUrl; 
