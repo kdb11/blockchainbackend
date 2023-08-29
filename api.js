@@ -42,16 +42,6 @@ app.get('/api/mine', (req, res) => {
     });
 });
 
-/* app.post('/api/regtoallnodes', (req, res) => {
-    const urlToAdd = req.body.NodeUrl;
-
-    if (voteChain.networkNodes.indexOf(urlToAdd) === -1) {
-        voteChain.networkNodes.push(urlToAdd);
-    }
-
-    voteChain.networkNodes.forEach
-}) */
-
 app.post('/api/regtoallnodes', async(req, res) => {
     const urlToAdd = req.body.nodeUrl;
 
@@ -62,7 +52,7 @@ app.post('/api/regtoallnodes', async(req, res) => {
     voteChain.networkNodes.forEach(async(url) => {
         const body = { nodeUrl: urlToAdd};
 
-        await fetch(`${url}/api/regbide`, {
+        await fetch(`${url}/api/regnode`, {
             method: 'POST',
             body: JSON.stringify(body),
             headers: { 'Content-Type': 'application/json'}
