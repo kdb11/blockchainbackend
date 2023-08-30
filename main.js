@@ -1,6 +1,6 @@
 let BlockChain = require("./blockChain");
 
-let blockChain = new BlockChain();
+let voteChain = new BlockChain();
 
 let Hash = require ('./hash');
 
@@ -9,6 +9,10 @@ let hash = new Hash();
 let ProofOfWork = require ('./proofOfWork');
 
 let proofOfWork = new ProofOfWork();
+
+let ValidateChain = require ('./validate');
+
+let validateChain = new ValidateChain();
 
 /* let hash = require ('object-hash'); */
 
@@ -80,4 +84,6 @@ blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
 console.log("Chain : ", blockChain); 
 console.log(blockChain.lastBlock()); */
-console.log(lastBlock());
+
+let testchain = {"chain":[{"index":1,"timestamp":1693433936382,"votes":[],"hash":"Genesis","nonce":1,"prevHash":"0"},{"index":2,"timestamp":1693434026560,"votes":[],"hash":"000c8e03ba4df90f47737d9f17b37ed1b0d9584facb19a9c967dc6939bc7ea77","nonce":7576,"prevHash":"Genesis"}],"pendingVotes":[],"networkNodes":["http://localhost:3001","http://localhost:3002"],"nodeUrl":"http://localhost:3000"}
+console.log(validateChain.validateChain(testchain.chain));
