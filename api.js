@@ -39,7 +39,7 @@ app.post('/api/vote', (req, res) => {
     res.status(201).json({ sucess: true, data: `block index: ${index}` }) */
 });
 
-app.get('/api/mine', (req, res) => { 
+app.get('/api/mine', async(req, res) => { 
     const prevBlock = voteChain.lastBlock();
     const prevBlockHash = prevBlock.hash;
 
@@ -54,10 +54,30 @@ app.get('/api/mine', (req, res) => {
 
     const block = voteChain.addNewBlock(prevBlockHash, nonce, hash);
 
+    voteChain.networkNodes.forEach(async(url) => {
+        await axios.post(`${url}/api/block`, { block: block });
+    });
+
+    /* await axios.post(`${voteChain.nodeUrl}/api/votetoallnodes`, {}) */
     res.status(200).json({
         sucess: true,
         data: block,
     });
+});
+
+app.post('/api/block', (req, res) => {
+    const block = req.body.block;
+    const lastBlock = voteChain.lastBlock();
+    const correctHash = lastBlock.hash == block.prevHash;
+    const correctIndex = lastBlock.index + 1 == block.index;
+
+    if (correctHash && correctIndex){
+        voteChain.chain.push(block);
+        voteChain.pendingVotes = [];
+        res.status(201).json({ success: true, data: block });
+    } else {
+        res.status(400).json({ success: false, errorMessage: 'block not correct', data: block });
+    }
 });
 
 app.post('/api/regtoallnodes', async(req, res) => {

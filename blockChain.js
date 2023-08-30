@@ -15,7 +15,7 @@ class BlockChain {
 
         this.nodeUrl = process.argv[3];
 
-        this.addNewBlock("Genesis", 1, "Genesis");
+        this.addNewBlock("0", 1, "Genesis");
     };
 
     addNewBlock(prevHash, nonce, hash) {
@@ -58,7 +58,7 @@ class BlockChain {
     };
 
     lastBlock() {
-        return this.chain.slice(-1)[0];
+        return this.chain.at(-1);
     };
 
 }

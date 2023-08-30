@@ -39,7 +39,7 @@ if(proofWork() == PROOF) {
     blockChain.addNewBlock(prevHash);
 } */
 
-const prevHash ='prevHash'
+/* const prevHash ='prevHash'
 
 const data = [
     { 
@@ -60,14 +60,14 @@ const data = [
         voteToken: 1
 
     },
-];
+]; */
 
 /* const nonce = 100;
 
 const hashedvalue = hash.createHash(prevHash, data, nonce);
 console.log(hashedvalue); */
 
-const nonce = proofOfWork.proofOfWork(prevHash, data);
+/* const nonce = proofOfWork.proofOfWork(prevHash, data);
 console.log(nonce);
 
 blockChain.addNewBlock("prevHash", 1);
@@ -79,4 +79,5 @@ blockChain.addNewVote('a', 'b', 1)
 blockChain.addNewBlock("prevHash", 1);
 blockChain.addNewVote('a', 'b', 1)
 console.log("Chain : ", blockChain); 
-console.log(blockChain.lastBlock());
+console.log(blockChain.lastBlock()); */
+console.log(lastBlock());
