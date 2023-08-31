@@ -60,6 +60,23 @@ class BlockChain {
     lastBlock() {
         return this.chain.at(-1);
     };
+
+    countVotes() {
+        const candidateVotes = {};
+
+        this.chain.forEach(block => {
+            block.votes.forEach(vote => {
+                const candidate = vote.candidate;
+                if (!candidateVotes[candidate]) {
+                    candidateVotes[candidate] = 1;
+                } else {
+                    candidateVotes[candidate]++;
+                }
+            });
+        });
+
+        return candidateVotes;
+    }
     
 }
 

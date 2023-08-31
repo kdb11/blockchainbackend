@@ -4,6 +4,9 @@ let ProofOfWork = require ('./proofOfWork');
 let proofOfWork = new ProofOfWork();
 let Hash = require ('./hash');
 let hashedvalue = new Hash();
+const eligibleVoters = ["Alice", "Bob", "Charlie"]; // List of eligible voters
+const predefinedCandidates = ["CandidateA", "CandidateB"]; // List of predefined candidates
+const candidateVoteCounts = {};
 let BlockChain = require("./blockChain");
 const { default: axios } = require('axios');
 const voteChain = new BlockChain();
@@ -21,24 +24,54 @@ app.get('/api/blockchain', (req, res) => {
     res.status(200).json(voteChain);
  });
 
-app.post('/api/votetoallnodes', (req, res) => { 
-   const vote = voteChain.addNewVote(req.body.voter, req.body.candidate, req.body.voteToken);
+ app.post('/api/votetoallnodes', (req, res) => { 
+    const voter = req.body.voter;
+    const candidate = req.body.candidate;
 
-   voteChain.addVoteToPendingVotes(vote);
+    if (eligibleVoters.includes(voter) && predefinedCandidates.includes(candidate)) {
+        const vote = voteChain.addNewVote(voter, candidate, req.body.voteToken);
 
-   voteChain.networkNodes.forEach(async(url) => {
-        await axios.post(`${url}/api/vote`, vote);
-   });
+        if (!candidateVoteCounts[candidate]) {
+            candidateVoteCounts[candidate] = 1;
+        } else {
+            candidateVoteCounts[candidate]++;
+        }
 
-   res.status(201).json({ sucess: true, data: `vote broadcasted to all nodes` })
+        voteChain.addVoteToPendingVotes(vote);
+ 
+        voteChain.networkNodes.forEach(async(url) => {
+            await axios.post(`${url}/api/vote`, vote);
+        });
+ 
+        res.status(201).json({ success: true, data: 'Vote broadcasted to all nodes', candidateVotes: candidateVoteCounts });
+    } else {
+        res.status(400).json({ success: false, errorMessage: 'Invalid voter or candidate' });
+    }
+});
+ 
+app.post('/api/vote', (req, res) => { 
+    const voter = req.body.voter;
+    const candidate = req.body.candidate;
+ 
+    if (eligibleVoters.includes(voter) && predefinedCandidates.includes(candidate)) {
+        const vote = req.body;
+        const index = voteChain.addVoteToPendingVotes(vote);
+ 
+        if (!candidateVoteCounts[candidate]) {
+            candidateVoteCounts[candidate] = 1;
+        } else {
+            candidateVoteCounts[candidate]++;
+        }
+
+        res.status(201).json({ success: true, data: `Block index: ${index}`, candidateVotes: candidateVoteCounts });
+    } else {
+        res.status(400).json({ success: false, errorMessage: 'Invalid voter or candidate' });
+    }
 });
 
-app.post('/api/vote', (req, res) => { 
-    const vote = req.body;
-    const index = voteChain.addVoteToPendingVotes(vote);
-    res.status(201).json({ sucess: true, data: `block index: ${index}` })
-    /* const index = voteChain.addNewVote(req.body.voter, req.body.candidate, req.body.voteToken);
-    res.status(201).json({ sucess: true, data: `block index: ${index}` }) */
+app.get('/api/votecounts', (req, res) => {
+    const candidateVotes = voteChain.countVotes();
+    res.status(200).json({ success: true, data: candidateVotes });
 });
 
 app.get('/api/mine', async(req, res) => { 
