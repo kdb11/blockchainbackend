@@ -198,7 +198,7 @@ app.get('/api/consensus', (req, res) => {
           console.log('No replacement needed');
         } else {
           voteChain.chain = longestChain;
-          voteChain.pendingVotes = pendingList;
+          voteChain.pendingList = pendingList;
           res.status(200).json({ success: true, data: voteChain });
         }
       });
