@@ -60,7 +60,7 @@ class BlockChain {
     lastBlock() {
         return this.chain.at(-1);
     };
-
+    
 }
 
 module.exports = BlockChain;

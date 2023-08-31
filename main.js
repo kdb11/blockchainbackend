@@ -85,5 +85,5 @@ blockChain.addNewVote('a', 'b', 1)
 console.log("Chain : ", blockChain); 
 console.log(blockChain.lastBlock()); */
 
-let testchain = {"chain":[{"index":1,"timestamp":1693433936382,"votes":[],"hash":"Genesis","nonce":1,"prevHash":"0"},{"index":2,"timestamp":1693434026560,"votes":[],"hash":"000c8e03ba4df90f47737d9f17b37ed1b0d9584facb19a9c967dc6939bc7ea77","nonce":7576,"prevHash":"Genesis"}],"pendingVotes":[],"networkNodes":["http://localhost:3001","http://localhost:3002"],"nodeUrl":"http://localhost:3000"}
+let testchain = {"chain":[{"index":1,"timestamp":1693436465013,"votes":[],"hash":"Genesis","nonce":1,"prevHash":"0"},{"index":2,"timestamp":1693436480102,"votes":[],"hash":"000c8e03ba4df90f47737d9f17b37ed1b0d9584facb19a9c967dc6939bc7ea77","nonce":7576,"prevHash":"Genesis"},{"index":3,"timestamp":1693436483613,"votes":[],"hash":"0005eebbe52b6536063d21249a2dd29d57bc8769994465e662f59aa4b5d28785","nonce":134,"prevHash":"000c8e03ba4df90f47737d9f17b37ed1b0d9584facb19a9c967dc6939bc7ea77"}],"pendingVotes":[],"networkNodes":["http://localhost:3002","http://localhost:3001"],"nodeUrl":"http://localhost:3000"}
 console.log(validateChain.validateChain(testchain.chain));

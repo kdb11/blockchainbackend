@@ -7,6 +7,8 @@ let hashedvalue = new Hash();
 let BlockChain = require("./blockChain");
 const { default: axios } = require('axios');
 const voteChain = new BlockChain();
+let ValidateChain = require ('./validate');
+let validateChain = new ValidateChain();
 const PORT = process.argv[2];
 
 console.log(proofOfWork, hashedvalue);
@@ -130,6 +132,36 @@ app.post('/api/regnodes', (req, res) => {
 
     res.status(201).json({ success: true, data: 'New nodes added' });
 });
+
+app.get('/api/consensus', (req, res) => {
+    const currentChainLength = voteChain.chain.length;
+    let maxLength = currentChainLength;
+    let longestChain = null;
+    let pendingList = null;
+  
+    // Iterera igenom alla noder i nätverket som finns upplagda på aktuell node...
+    voteChain.networkNodes.forEach((node) => {
+      console.log('Node: ', node);
+  
+      axios(`${node}/api/blockchain`).then((data) => {
+        console.log('Data ifrån axios: ', data.data.chain);
+  
+        if (data.data.chain.length > maxLength) {
+          maxLength = data.data.chain.length;
+          longestChain = data.data.chain;
+          pendingList = data.data.pendingList;
+        }
+  
+        if (!longestChain || (longestChain && !validateChain.validateChain(longestChain))) {
+          console.log('No replacement needed');
+        } else {
+          voteChain.chain = longestChain;
+          voteChain.pendingVotes = pendingList;
+          res.status(200).json({ success: true, data: voteChain });
+        }
+      });
+    });
+  });
 
 /* app.post('/api/regnodes', (req, res) => {
     const newNodes = req.body.nodes;
