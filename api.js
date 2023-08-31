@@ -4,8 +4,8 @@ let ProofOfWork = require ('./proofOfWork');
 let proofOfWork = new ProofOfWork();
 let Hash = require ('./hash');
 let hashedvalue = new Hash();
-const eligibleVoters = ["Alice", "Bob", "Charlie"]; // List of eligible voters
-const predefinedCandidates = ["CandidateA", "CandidateB"]; // List of predefined candidates
+const eligibleVoters = ["Alice", "Bob", "Charlie"];
+const predefinedCandidates = ["CandidateA", "CandidateB"];
 const candidateVoteCounts = {};
 let BlockChain = require("./blockChain");
 const { default: axios } = require('axios');
@@ -30,6 +30,11 @@ app.get('/api/blockchain', (req, res) => {
 
     if (eligibleVoters.includes(voter) && predefinedCandidates.includes(candidate)) {
         const vote = voteChain.addNewVote(voter, candidate, req.body.voteToken);
+
+        const voterIndex = eligibleVoters.indexOf(voter);
+        if (voterIndex !== -1) {
+            eligibleVoters.splice(voterIndex, 1);
+        }
 
         if (!candidateVoteCounts[candidate]) {
             candidateVoteCounts[candidate] = 1;
@@ -56,7 +61,12 @@ app.post('/api/vote', (req, res) => {
     if (eligibleVoters.includes(voter) && predefinedCandidates.includes(candidate)) {
         const vote = req.body;
         const index = voteChain.addVoteToPendingVotes(vote);
- 
+
+        const voterIndex = eligibleVoters.indexOf(voter);
+        if (voterIndex !== -1) {
+            eligibleVoters.splice(voterIndex, 1);
+        }
+
         if (!candidateVoteCounts[candidate]) {
             candidateVoteCounts[candidate] = 1;
         } else {
