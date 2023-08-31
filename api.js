@@ -176,33 +176,37 @@ app.post('/api/regnodes', (req, res) => {
     res.status(201).json({ success: true, data: 'New nodes added' });
 });
 
-app.get('/api/consensus', (req, res) => {
+app.get('/api/consensus', async (req, res) => {
     const currentChainLength = voteChain.chain.length;
     let maxLength = currentChainLength;
     let longestChain = null;
     let pendingList = null;
   
-    voteChain.networkNodes.forEach((node) => {
-      console.log('Node: ', node);
+    const networkRequests = voteChain.networkNodes.map(async (node) => {
+      try {
+        const response = await axios.get(`${node}/api/blockchain`);
+        const data = response.data;
   
-      axios(`${node}/api/blockchain`).then((data) => {
-        console.log('Data ifrån axios: ', data.data.chain);
-  
-        if (data.data.chain.length > maxLength) {
-          maxLength = data.data.chain.length;
-          longestChain = data.data.chain;
-          pendingList = data.data.pendingList;
+        if (data.chain.length > maxLength) {
+          maxLength = data.chain.length;
+          longestChain = data.chain;
+          pendingList = data.pendingList;
         }
-  
-        if (!longestChain || (longestChain && !validateChain.validateChain(longestChain))) {
-          console.log('No replacement needed');
-        } else {
-          voteChain.chain = longestChain;
-          voteChain.pendingList = pendingList;
-          res.status(200).json({ success: true, data: voteChain });
-        }
-      });
+      } catch (error) {
+        console.error('Error fetching data from network node:', error);
+      }
     });
+  
+    await Promise.all(networkRequests);
+  
+    if (!longestChain || !validateChain.validateChain(longestChain)) {
+      console.log('No replacement needed');
+      res.status(200).json({ success: true, data: voteChain });
+    } else {
+      voteChain.chain = longestChain;
+      voteChain.pendingList = pendingList;
+      res.status(200).json({ success: true, data: voteChain });
+    }
   });
 
 /* app.post('/api/regnodes', (req, res) => {
