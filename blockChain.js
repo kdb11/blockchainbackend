@@ -28,8 +28,6 @@ class BlockChain {
             prevHash: prevHash,
         };
 
-        /* this.hash = hashedvalue.createHash(block.prevHash, block.votes, block.nonce); */
-
         this.chain.push(block);
         this.pendingVotes = [];
 
