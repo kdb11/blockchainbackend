@@ -47,7 +47,7 @@ After that register a new node by making a post request to 
 
 http://localhost:3000/api/regtoallnodes
 
-and in body write
+and in body write (dont copy paste this)
 
 {
     "nodeUrl": "http://localhost:3001"
